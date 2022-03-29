@@ -9,8 +9,8 @@ import DashboardPage from './pages/Dashboard/DashboardPage';
 const App = () => {
     return (
         <div>
-            <NavigationBar />
             <BrowserRouter>
+                <NavigationBar />
                 <Routes>
                     <Route path='/' element={<HomePage />} />
                     <Route path='login' element={<LoginPage />} />
