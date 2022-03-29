@@ -1,10 +1,13 @@
 import React from 'react'
+import NavigationBar from './components/NavigationBar/NavigationBar'
 
 
 //This is the root component of our application
 const App = () => {
   return (
-    <div>Hello world!</div>
+    <div>
+        <NavigationBar />
+    </div>
   )
 }
 
