@@ -5,10 +5,11 @@ import ReactDOM from 'react-dom';
 import "./assets/fonts/roboto/stylesheet.css";
 import "./assets/css/reset.scss";
 import "./assets/css/global.scss";
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <h1>Hello world</h1>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
