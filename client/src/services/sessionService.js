@@ -19,3 +19,7 @@ export const login = async (username, password, callback) => {
         return false;
     }
 }
+
+export const isLoggedIn = () => {
+    return true;
+}
