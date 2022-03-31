@@ -13,3 +13,44 @@ export const validateUsername = (username) => {
     
     return null;
 }
+
+export const validateFirstName = (firstName) => {
+    const min = 2;
+    const max = 15;
+
+    if(firstName.match("^[A-Za-z0-9]+$")) {
+        return "First name must be letters only.";
+    }
+
+    if(firstName.length < min || firstName.length > max){
+        return "First name must be between " + min + " and " + max + " characters long.";
+    }
+    
+    return null;
+}
+
+
+export const validateLastName = (lastName) => {
+    const min = 2;
+    const max = 20;
+
+    if(lastName.match("^[A-Za-z0-9]+$")) {
+        return "Last name must be letters only.";
+    }
+
+    if(lastName.length < min || lastName.length > max){
+        return "Last name must be between " + min + " and " + max + " characters long.";
+    }
+    
+    return null;
+}
+
+
+export const validateGender = (gender) => {
+
+    if(!(gender === "Male" || gender === "Female")) {
+        return "Please choose a gender.";
+    }
+
+    return null;
+}

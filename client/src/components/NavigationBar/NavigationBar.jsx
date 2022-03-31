@@ -5,6 +5,7 @@ const NavigationBar = () => {
   return (
     <nav className='navigation'>
       <Link to="/">Home</Link>
+      <Link to="/NewAuthor">Add Author</Link>
       <Link to="/login">Login</Link>
     </nav>
   )

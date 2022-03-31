@@ -16,6 +16,13 @@ export const login = async (username, password) => {
     }
 }
 
+export const signIn = async (username, firstName, lastName, gender, password) => {
+    //made to act like a server, waits a second and then replies
+    await new Promise(t => setTimeout(t, 1000));
+    return true;
+}
+
+
 export const isLoggedIn = () => {
     return window.isLoggedIn;
 }
