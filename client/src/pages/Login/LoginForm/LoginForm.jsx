@@ -36,7 +36,7 @@ const LoginForm = () => {
         //both username and password are in the correct format, trying to send the login request to the server
         //TODO: replace console.log callback with setToken function
         setIsLoading(true);
-        let loginSuccessful = await login(username, password, console.log);
+        let loginSuccessful = await login(username, password);
         setIsLoading(false);
 
         if(loginSuccessful){
