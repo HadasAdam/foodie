@@ -1,9 +1,8 @@
-const express = require('express'); //Line 1
-const app = express(); //Line 2
-const port = process.env.PORT || 5000; //Line 3
+const express = require('express'); 
+const config = require('./config');
+const app = express(); 
 
-// This displays message that the server running and listening to specified port
-app.listen(port, () => console.log(`Listening on port ${port}`)); //Line 6
+app.listen(port, () => console.log(`Listening on port ${config.port}`)); //Line 6
 
 // create a GET route
 app.get('/express_backend', (req, res) => { //Line 9
