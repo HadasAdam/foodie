@@ -16,11 +16,6 @@ const userExists = (username) => {
         .catch(err => console.log(err));
 }
 
-router.get('/', async (req, res) => {
-    res.json("user endpoint is working!");
-});
-
-
 //endpoint for signing up
 router.post('/signup', async (req, res) => {
     const firstName = req.body.firstName || '';
@@ -77,6 +72,7 @@ router.post('/signup', async (req, res) => {
     }
 });
 
+//endpoint for logging in
 router.post('/login', async (req, res) => {
 
     const username = req.body.username || '';
