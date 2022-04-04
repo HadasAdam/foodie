@@ -16,6 +16,7 @@ const userExists = (username) => {
         .catch(err => console.log(err));
 }
 
+
 //endpoint for signing up
 router.post('/signup', async (req, res) => {
     const firstName = req.body.firstName || '';

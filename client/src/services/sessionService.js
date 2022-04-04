@@ -31,7 +31,7 @@ export const login = async (username, password) => {
     return success;
 }
 
-export const signIn = async (username, firstName, lastName, gender, password) => {
+export const signUp = async (username, firstName, lastName, gender, password) => {
     //turns the object to json to send to server
     const body = JSON.stringify({username, firstName, lastName, gender, password});
 

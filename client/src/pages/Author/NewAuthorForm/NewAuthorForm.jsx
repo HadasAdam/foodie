@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import "./NewAuthorForm.scss";
-import { signIn } from '../../../services/sessionService';
+import { signUp } from '../../../services/sessionService';
 import { useNavigate } from 'react-router-dom';
 import {validateUsername, validatePassword, validateFirstName, validateLastName, validateGender} from '../../../services/validationsService';
 const NewAuthorForm = () => {
@@ -62,10 +62,10 @@ const NewAuthorForm = () => {
 
         //TODO: replace console.log callback with setToken function
         setIsLoading(true);
-        let signInSuccessful = await signIn(username, firstName, lastName, gender, password);
+        let signUpSuccessful = await signUp(username, firstName, lastName, gender, password);
         setIsLoading(false);
 
-        if(signInSuccessful){
+        if(signUpSuccessful){
             alert("Author was added successfuly!");
             navigate("/");
         } else{
