@@ -18,7 +18,7 @@ export const validateFirstName = (firstName) => {
     const min = 2;
     const max = 15;
 
-    if(firstName.match("^[A-Za-z0-9]+$")) {
+    if(!firstName.match("^[A-Za-z0-9]+$")) {
         return "First name must be letters only.";
     }
 
@@ -34,7 +34,7 @@ export const validateLastName = (lastName) => {
     const min = 2;
     const max = 20;
 
-    if(lastName.match("^[A-Za-z0-9]+$")) {
+    if(!lastName.match("^[A-Za-z0-9]+$")) {
         return "Last name must be letters only.";
     }
 
