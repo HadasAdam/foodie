@@ -1,13 +1,14 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import "./LoginForm.scss";
 import {validateUsername, validatePassword} from '../../../services/validationsService';
 import { login } from '../../../services/sessionService';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../../../App';
 const LoginForm = () => {
 
     //used for loading while waiting for the server login request
     const [isLoading, setIsLoading] = useState(false);
-
+    const { setIsLoggedIn } = useContext(AppContext)
     //username and password fields
     const usernameRef = useRef();
     const passwordRef = useRef();
@@ -41,6 +42,7 @@ const LoginForm = () => {
 
         if(loginSuccessful){
             alert("Login successful!");
+            setIsLoggedIn(true);
             navigate("/");
         } else{
             alert("Wrong username or password");
