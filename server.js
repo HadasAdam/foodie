@@ -1,10 +1,42 @@
 const express = require('express'); 
+const mongoose = require('mongoose');
 const config = require('./config');
+const bodyParser = require('body-parser');
 const app = express(); 
+const path = require('path');
+const users = require('./routes/usersRoute');
 
-app.listen(port, () => console.log(`Listening on port ${config.port}`)); //Line 6
+//connecting to database
+mongoose.connect(config.mongoConnectionString);
 
-// create a GET route
-app.get('/express_backend', (req, res) => { //Line 9
-  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' }); //Line 10
-}); //Line 11
+//logs when database connection is successful
+mongoose.connection.on('connection', () => {
+  console.log("Connected to MongoDB");
+});
+
+//logs databse errors
+mongoose.connection.on('error', (error) => {
+  console.log(error);
+});
+
+//middleware to make sure ContentType header is matching the type option, and to parse query strings with the queryStrings library
+app.use(bodyParser.urlencoded({extended: false})); 
+
+//middleware to parse body requests to json object
+app.use(bodyParser.json());
+
+//middleware to handle cors and preflight requests
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  if (req.method === 'OPTIONS') {
+      res.header("Access-Control-Allow-Methods", "PUT, POST, DELETE, GET");
+      return res.status(200).json({});
+  }
+  next();
+});
+
+//sets the users path
+app.use('/api/users', users);
+
+app.listen(config.port, () => console.log(`Listening on port ${config.port}`)); //Line 6
