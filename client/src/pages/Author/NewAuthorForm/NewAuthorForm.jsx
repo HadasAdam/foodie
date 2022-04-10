@@ -89,7 +89,11 @@ const NewAuthorForm = () => {
 
             {/* Gender */}
             <label htmlFor='gender'>Gender</label>
-            <input type="text" placeholder='Your Gender' id='gender' ref={genderRef} />
+            <select id='gender' ref={genderRef}>
+                <option value="None">Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
 
             {/* Password */}
             <label htmlFor='password'>Password</label>

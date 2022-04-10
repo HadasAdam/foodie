@@ -14,7 +14,8 @@
         width: 90%;
         padding-top: 10px;
     }
-    input{
+    input, select{
+        box-sizing: border-box;
         width: 90%;
         margin: 5px 0 20px 0;
         height: 25px;
