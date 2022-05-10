@@ -6,6 +6,10 @@ import LoginPage from './pages/Login/LoginPage';
 import Footer from './components/Footer/Footer';
 import NewAuthorPage from './pages/Author/NewAuthorPage';
 import ManagementMenu from './components/ManagementMenu/ManagementMenu';
+import NewPostPage from './pages/Posts/NewPost/NewPostPage';
+import PostsListPage from './pages/Posts/PostsList/PostsListPage';
+import EditPostPage from './pages/Posts/EditPost/EditPostPage';
+
 
 //application context
 export const AppContext = React.createContext();
@@ -24,6 +28,9 @@ const App = () => {
                     <Route path='/' element={<HomePage />} />
                     <Route path='/NewAuthor' element={<NewAuthorPage />} />
                     <Route path='login' element={<LoginPage />} />
+                    <Route path='posts/new' element={<NewPostPage />} />
+                    <Route path='posts/edit/:postId' element={<EditPostPage />} />
+                    <Route path='posts' element={<PostsListPage />} />
                 </Routes>
                 <Footer />
             </BrowserRouter>

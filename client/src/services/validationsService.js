@@ -54,3 +54,15 @@ export const validateGender = (gender) => {
 
     return null;
 }
+
+export const validatePost = (post) => {
+    if(!post.title){
+        return "Please enter post title"
+    }
+
+    if(!post.text){
+        return "Please enter post text";
+    }
+
+    return null;
+}

@@ -41,7 +41,9 @@ const HomePage = () => {
             text={post.text}
             imageLink={post.imageLink}
             videoLink={post.videoLink}
-            key={post.title}
+            authorName={post.authorName}
+            createDate={post.createDate}
+            key={post.id}
           />)
       }
     </main>
