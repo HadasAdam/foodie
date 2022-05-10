@@ -1,13 +1,14 @@
-import React from 'react'
 import "./Post.scss";
 
-const Post = ({ title, text, imageLink, videoLink }) => {
-
+const Post = ({ title, text, imageLink, videoLink, authorName, createDate }) => {
     return (
         <article className='post'>
             {/* Post title */}
             <h2>{title}</h2>
 
+            {/* Post author*/}
+            <h3>Written by: {authorName} at {new Date(createDate).toUTCString()}</h3>
+            
             {/* Post text */}
             <p>{text}</p>
 

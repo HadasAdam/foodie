@@ -11,16 +11,21 @@ const postSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    date: {
+    imageLink: {
+        type: String,
+    },
+    videoLink: {
+        type: String
+    },
+    createDate: {
         type: Date,
         default: Date.now
     },
-    // a blog post can have multiple comments, so it should be in a array.
-    // all comments info should be kept in this array of this blog post.
-    comments: [{
+    author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment'
-    }]
+        ref: 'User'
+    },
+
 });
 
 postSchema.virtual('url').get(function(){

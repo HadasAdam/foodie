@@ -1,67 +1,148 @@
 const express = require('express');
 const router = new express.Router();
 const Post = require('../models/postModel');
-const Comment = require('../models/commentModel');
+const auth = require("../middleware/auth");
+const { mongoConnectionString } = require('../config');
+const { default: mongoose } = require('mongoose');
 
-// Get comments
-router.get('/post/:id/comment', (req, res) => {
-    res.render('post-comment', {title: 'Post a comment'})
+
+router.post('/', auth, async (req, res) => {
+    console.log(`Entered insert post with body ${JSON.stringify(req.body)}`)
+    const title = req.body.title || '';
+    const text = req.body.text || '';
+    const imageLink = req.body.imageLink || '';
+
+    const requestBody = { title, text, imageLink };
+
+    //validation
+    let errors = {};
+    if (!title) {
+        errors = { ...errors, title: "Post must have a title" };
+    }
+    if (Object.keys(errors).length > 0) {
+        res.json({ errors });
+    } else {
+        const post = new Post({
+            title: requestBody.title,
+            text: requestBody.text,
+            imageLink: requestBody.imageLink,
+            author: req.user.id
+        });
+        post.save();
+        res.json({ success: true });
+    }
+
+    console.log("Finished insert post")
+
+});
+
+router.get('/', async (req, res) => {
+    Post.aggregate([
+        {
+            $lookup: {
+                "from": "users",
+                "localField": "author",
+                "foreignField": "_id",
+                "as": "author"
+            },
+        },
+        {
+            $unwind: "$author"
+        },
+        {
+            $project:
+            {
+                "id": "$_id",
+                "title": 1,
+                "text": 1,
+                "imageLink": 1,
+                "videoLink": 1,
+                "createDate": 1,
+                "authorName": "$author.username",
+            }
+        },
+        {
+            $sort:
+            {
+                "createDate": -1
+            }
+        }
+
+    ], { allowDiskUse: true }, (err, docs) => res.json(docs));
+});
+
+router.get('/:id', async (req, res) => {
+    let doc = null;
+    Post.aggregate([
+        {
+            $match: 
+            {
+                "_id": mongoose.Types.ObjectId(req.params.id)
+            }
+        },
+        {
+            $lookup:
+            {
+                "from": "users",
+                "localField": "author",
+                "foreignField": "_id",
+                "as": "author"
+            },
+        },
+        {
+            $unwind: "$author"
+        },
+        {
+            $project:
+            {
+                "id": "$_id",
+                "title": 1,
+                "text": 1,
+                "imageLink": 1,
+                "videoLink": 1,
+                "createDate": 1,
+                "authorName": "$author.username",
+            }
+        },
+        {
+            $sort:
+            {
+                "createDate": -1
+            }
+        }
+
+    ], { allowDiskUse: true }, (err, docs) => res.json(docs[0]));
 })
 
-router.post('/post/:id/comment', async (req, res) => {
-// find out which post you are commenting
-    const id = req.params.id;
-// get the comment text and record post id
-    const comment = new Comment({
-        text: req.body.comment,
-        post: id
+router.delete('/:id', auth, async (req, res) => {
+    Post.deleteOne({ '_id': req.params.id }, (err) => {
+        if (err) {
+            res.status(401).send("Unable to delete post")
+        } else {
+            res.json({ success: true });
+        }
     })
-    // save comment
-    await comment.save();
-    // get this particular post
-    const postRelated = await Post.findById(id);
-    // push the comment into the post.comments array
-    postRelated.comments.push(comment);
-    // save and redirect...
-    await postRelated.save(function(err) {
-        if(err) {console.log(err)}
-        res.redirect('/')
-    })
-
 })
 
-//  Get each post details.
-router.get('/post/:id', (req, res) => {
-    Post.findById(req.params.id)
-        .populate('comments')
-        .exec(function(err, results) {
-            if(err) {console.log(err)}
-                res.render('post_details', {title: 'Post details', post: 
-            results, comments: results.comments})
-         })
-})
+router.put('/:id', auth, async (req, res) => {
+    const title = req.body.title || '';
+    const text = req.body.text || '';
+    const imageLink = req.body.imageLink || '';
 
-router.get('/new', (req, res) => {
-    res.render('create-post', {title: 'Create a post'})
-})
+    const requestBody = { title, text, imageLink };
 
-router.post('/new', (req, res) => {
-    const post = new Post({
-        title: req.body.title,
-        text: req.body.text
-     });
-    post.save(function(err) {
-        if(err) {console.log(err)}
-        res.redirect('/')
-    })
-})
-
-router.get('/', (req, res) => {
-    Post.find()
-        .exec(function(err, results) {
-            if(err) {console.log(err)}
-            res.render('posts', {title: 'All Posts', posts: results})
+    Post.updateOne({ '_id': req.params.id },
+        {
+            title: requestBody.title,
+            text: requestBody.text,
+            imageLink: requestBody.imageLink,
+        }, {}, (err, r) => {
+            if (err) {
+                res.json({ error: err.message })
+            } else {
+                res.json({ success: true });
+            }
         })
 });
 
- module.exports = router;
+module.exports = router;

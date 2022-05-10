@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const app = express(); 
 const path = require('path');
 const users = require('./routes/usersRoute');
+const posts = require('./routes/postRoute');
 
 //connecting to database
 mongoose.connect(config.mongoConnectionString);
@@ -38,5 +39,8 @@ app.use((req, res, next) => {
 
 //sets the users path
 app.use('/api/users', users);
+
+//sets the posts path
+app.use('/api/posts', posts)
 
 app.listen(config.port, () => console.log(`Listening on port ${config.port}`)); //Line 6

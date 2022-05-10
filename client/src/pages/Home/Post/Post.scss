@@ -5,14 +5,22 @@
     border: 1px solid $color-divider;
     border-radius: 5px;
     margin-bottom: 50px;
-    h2{
+
+    h2,h3{
         padding: 10px 40px 10px 25px;
-        font-size: 30px;
         background-color: $color-primary;
         color: $color-primary-text;
+    }
+    h2{
+        font-size: 30px;
         border-radius: 5px 5px 0 0;
         text-shadow: 0.5px 0.5px #ccc;
         letter-spacing: 2px;
+    }
+
+    h3{
+        font-size: 15px;
+        font-weight: 400;
     }
     
     p{
