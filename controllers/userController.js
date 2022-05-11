@@ -5,7 +5,7 @@ exports.user_findByUserName = function(req,res){
     res.send (User.findOne({username: req.body.username}).exec())
 }
 
-exports.user_create = function(req,res){
+exports.user_create = async function(req,res){
     const firstName = req.body.firstName || '';
     const lastName = req.body.lastName || '';
     const gender = req.body.gender || '';
