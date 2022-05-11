@@ -1,24 +1,22 @@
 const express = require('express'); 
 const mongoose = require('mongoose');
+const router = require ('./router')
 const config = require('./config');
 const bodyParser = require('body-parser');
 const app = express(); 
 const path = require('path');
-const users = require('./routes/usersRoute');
-const posts = require('./routes/postRoute');
 
-//connecting to database
-mongoose.connect(config.mongoConnectionString);
 
-//logs when database connection is successful
-mongoose.connection.on('connection', () => {
-  console.log("Connected to MongoDB");
-});
+const ConnectionString = config.mongoConnectionString;
 
-//logs databse errors
-mongoose.connection.on('error', (error) => {
-  console.log(error);
-});
+mongoose.connect(ConnectionString,{useNewUrlParser:true, useUnifiedTopology: true },(err)=>{
+  if(err) {
+      console.log(err.message)
+  }else{
+      console.log("Successfully Connected to mongodb");
+  }
+})
+
 
 //middleware to make sure ContentType header is matching the type option, and to parse query strings with the queryStrings library
 app.use(bodyParser.urlencoded({extended: false})); 
@@ -38,9 +36,6 @@ app.use((req, res, next) => {
 });
 
 //sets the users path
-app.use('/api/users', users);
 
-//sets the posts path
-app.use('/api/posts', posts)
-
+app.use(router);
 app.listen(config.port, () => console.log(`Listening on port ${config.port}`)); //Line 6

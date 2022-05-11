@@ -1,5 +1,5 @@
 const express = require('express');
-const Post = require('../models/userPost');
+const Post = require('../models/postModel');
 
 
 exports.post_create = function(req,res){
