@@ -1,8 +1,8 @@
 const express = require('express');
 const Tag = require('../models/tagModel');
 
-exports.tag_create =  function(req,res){
-    const name = req.body.name ;
+exports.tag_create = async function(req,res){
+    const name = await (req.body.name) ;
 
     const requestBody = { name };
 
@@ -15,7 +15,7 @@ exports.tag_create =  function(req,res){
         res.json({ errors })
     } else {
         const tag = new Tag({
-            name: requestBody.name
+            name
         })
         tag.save();
         res.json({success: true})
@@ -23,9 +23,9 @@ exports.tag_create =  function(req,res){
 
 }
 
-exports.tag_delete = function(req,res){
+exports.tag_delete = async function(req,res){
 
-    Tag.deleteOne({ '_id': req.query.id }, (err) => {
+    Tag.deleteOne({ '_id': req.params.id }, (err) => {
         if (err) {
             res.status(400).send("Unable to delete tag")
         } else {

@@ -8,11 +8,11 @@ const tag_controller = require('../controllers/tagController');
 
 
 //endpoint for creating tag
-router.post('/create', tag_controller.tag_create());
+router.post('/create', tag_controller.tag_create);
 
-// router.get('/get', tag_controller.tag_get());
+// router.get('/get', tag_controller.tag_get);
 
-router.post('/delete/:id', tag_controller.tag_delete());
+router.post('/delete/:id', tag_controller.tag_delete);
 
 
 module.exports = router;

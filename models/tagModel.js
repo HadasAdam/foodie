@@ -5,7 +5,13 @@ const tagSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    id: {
+        type: Number,
+        required: true
+    }
 });
+
+// const sequenceCollection = new mongoose.Collection("sequence")
 
 const Tag = mongoose.model('Tag', tagSchema);
 module.exports = Tag;
